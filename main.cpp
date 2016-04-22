@@ -124,11 +124,14 @@ int main()
         //cout << aoq(i, 10, 3) << endl;
         fout << i << " " << aoq(i, k, m, c) << endl;
     }
-    //double bestTheoretical = 0;
+    double bestTheoretical = 0;
     /// brute force to get all the values below three percent
-    /*
+    cout << "-------------------------------------------------------------------" << endl;
+    cout << "--------- Brute Force to get the best theoretical results ---------" << endl;
+    cout << "--------- for c = 1 and p = 0.1 ---------" << endl;
     for(int m = 2; m <= 10; m++) {
         for(int k = 5; k <= 50; k++) {
+                /// pass p = 0.1 and c = 1 hard coded
             bestTheoretical = aoq(0.1, k, m, 1);
             if(bestTheoretical <= 0.03) {
                 cout << "k: " << k << ", m: " << m << endl;
@@ -137,7 +140,6 @@ int main()
             }
         }
     }
-    */
     system("gnuplot command.txt ");
     return 0;
 }
