@@ -1,2 +1,4 @@
-plot "test_output.dat" using 1:2 with lines
+plot "test_output.dat" using 1:2 with lines,\
+"aoql.dat" using 1:2 with lines,\
+"result.dat" using 1:2 with points
 pause -1
