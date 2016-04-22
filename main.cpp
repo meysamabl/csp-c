@@ -21,6 +21,8 @@ size_t safe_advance(Iterator& it, Iterator const& end, size_t n)
 int main()
 {
     int k, m, c;
+    int productionLineSize = 1000;
+    int numberOfTimesForTesting = 100;
     list<int> vals;
     cout << "Please enter k, m and c respectively: ";
     cin >> k;
@@ -39,10 +41,10 @@ int main()
     fstream fout("test_output.dat", ios::out);
     fstream pout("result.dat", ios::out);
     double defaultNoOfDefects = 0;
-    for(int j = 0; j <= 99; j++) {
+    for(int j = 0; j < numberOfTimesForTesting; j++) {
         //defaultNoOfDefects = 0;
         /// Sample object creation ------------------------
-        for(int i = 0; i < 1000; ++i) {
+        for(int i = 0; i < productionLineSize; ++i) {
                 number = distribution(generator);
                 if(number > 0.1) {
                     status = 'C';
@@ -112,20 +114,22 @@ int main()
     for(list<int>::iterator intIt = vals.begin(); intIt != vals.end(); intIt++) {
         myAvg += (double)*intIt;
     }
-    myAvg = myAvg/100/1000;
-    pout << defaultNoOfDefects/1000/100 << " " << myAvg << endl;
+    myAvg = myAvg/numberOfTimesForTesting/productionLineSize;
+    pout << defaultNoOfDefects/productionLineSize/numberOfTimesForTesting << " " << myAvg << endl;
     cout << "------------------------------------------" << endl;
     cout << "Results: \nk: " << k << ", m: " << m << ", c: " << c << endl;
     cout << "Empirical AOQ: " << myAvg  << endl;
-    cout << "Theoretical AOQ: " << aoq(defaultNoOfDefects/1000/100, k, m, c) << endl;
+    cout << "Theoretical AOQ: " << aoq(defaultNoOfDefects/productionLineSize/numberOfTimesForTesting, k, m, c) << endl;
     for(double i = 0.0; i <=1; i+=0.001) {
         //cout << aoq(i, 10, 3) << endl;
         fout << i << " " << aoq(i, k, m, c) << endl;
     }
-    double bestTheoretical = 0;
+    //double bestTheoretical = 0;
+    /// brute force to get all the values below three percent
+    /*
     for(int m = 2; m <= 10; m++) {
         for(int k = 5; k <= 50; k++) {
-            bestTheoretical = aoq(0.1, k, m, 3);
+            bestTheoretical = aoq(0.1, k, m, 1);
             if(bestTheoretical <= 0.03) {
                 cout << "k: " << k << ", m: " << m << endl;
                 cout << "Theoretical AOQ: " << bestTheoretical << "-------------" << endl << endl;
@@ -133,6 +137,7 @@ int main()
             }
         }
     }
+    */
     system("gnuplot command.txt ");
     return 0;
 }
